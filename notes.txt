@@ -1,0 +1,35 @@
+//arrow function example:
+/*
+app.get('/', (req, res) => {
+    res.send('Working');
+});
+*/
+
+/*
+To Do:
+mailParser.js: needs to connect to o365 mailbox auth with 0Auth to retrieve/process alert messages from newgate for presentation on Issues page
+-Should write issues to local DB, only new issues, and present to issues page. 
+-Should include capability to delete issue from page and not have it show up again. 
+    -Can do this either via:
+        keeping track of bus# and timestamp of issue in local database
+        keeping track of fixed issues, if present don't write old or newly resolved issues to local database
+-Use regex or some other method to parse alert emails from newgate, and post alerts to local db issues table
+-Use this or another module/function to pull new issues from db to front-end. 
+-Use this or another module/function to PUT changes from front-end to database. 
+
+calcMilage.js: needs to query active/moving buses for their coordinates every X seconds and calculate the milage driven. 
+-Should store a record of each bus, current milage in a db table. 
+-Whenever a bus is active and moving, the milage is summed and stored for later use in the database.
+-Calculate milage perhaps by submitting 2 gps coordinates to google maps api, and using the returned distance via road travel as the milage traveled. 
+
+maintenanceUser.html:
+This page is a wall-board only page with minimal options, allows garage staff to track current milage of vehicles, upcoming maintenance, etc/ 
+Includes list of all maintenance tasks inputed to db via maintenanceAdmin.html page to db, presents current milage, milage when due, and status. 
+
+maintenance.html:
+Just a wallboard for management to view status of each bus with a configured maintenacne task, and its current status. 
+
+maintenanceAdmin.html:
+Page where the maintenance tasks can be added to the list for each bus. 
+Should have a input field for bus#, a drop down of the available maintenance categories/tasks... show bus current milage(optional) and unput field for when the task should be performed by. 
+*/

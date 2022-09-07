@@ -1,2 +1,1 @@
-# swTracker
-Unfinished wallboard webapp to track online status of SmartWitness cameras. Aspirations to build in full gps tracking functionality. 
+"# swWallboard; unfinished wallboard webapp/gps tracker platform to interoperate with SmartWitness cameras" 
