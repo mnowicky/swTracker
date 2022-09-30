@@ -1,0 +1,14 @@
+Vehicle ID419
+                            DRIDT0MA52101222
+                            
+                            
+                            Event TypeMediaError  - SD1,Protected
+                            Event Local Time2022-08-17 03:20:59
+                            Event Time GMT2022-08-17 07:20:59
+                            URLView Event
+                            More DataSD1,Protected
+                            Vehicle Registration
+                            Vehicle VIN
+                            Vehicle Manufacturer
+                            Vehicle Model
+                            Vehicle FuelColorTransmissionPolicy HolderPolicy NumberCustom 1Custom 2

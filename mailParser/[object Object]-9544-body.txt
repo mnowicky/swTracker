@@ -1,0 +1,14 @@
+Vehicle ID435
+                            DRIDT0MA62100535
+                            
+                            
+                            Event TypeMediaError  - SD door open
+                            Event Local Time2022-09-20 16:24:01
+                            Event Time GMT2022-09-20 20:24:01
+                            URLView Event
+                            More DataSD door open
+                            Vehicle Registration
+                            Vehicle VIN
+                            Vehicle Manufacturer
+                            Vehicle Model
+                            Vehicle FuelColorTransmissionPolicy HolderPolicy NumberCustom 1Custom 2

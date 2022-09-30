@@ -28,7 +28,6 @@ app.use(function (req, res, next) {
 //add to cron job to: determine devices with media write errors by parsing it@wnybusco.com mailbox for bus numbers with media write errors, cahe to deviceIssues.json
 cron.schedule("*/20 * * * * *", function(){
     logger.printWriteLine("Cron job successful; device statuses re-cached to getDeviceStatusAll.json.", 1);
-    //mp.connectMailbox();
     mp.run();
     reqs.cacheDeviceStatusAll();
 });
@@ -55,7 +54,7 @@ app.get('/maintenance', function(req, res){
 })
 
 app.get('/maintenanceAdmin', function(req, res){
-    logger.printWriteLine('Maintenance admin/modifucation page accessed', 1);
+    logger.printWriteLine('Maintenance admin/modification page accessed', 1);
     res.sendFile(path.join(__dirname, '/views/maintenanceAdmin.html'));
 })
 

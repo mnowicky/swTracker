@@ -1,0 +1,14 @@
+Vehicle ID720
+                            DRIDT0MA12200330
+                            
+                            
+                            Event TypeMediaError  - SD1,Protected
+                            Event Local Time2022-09-20 16:24:17
+                            Event Time GMT2022-09-20 20:24:17
+                            URLView Event
+                            More DataSD1,Protected
+                            Vehicle Registration
+                            Vehicle VIN
+                            Vehicle Manufacturer
+                            Vehicle Model
+                            Vehicle FuelColorTransmissionPolicy HolderPolicy NumberCustom 1Custom 2

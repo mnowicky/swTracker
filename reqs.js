@@ -98,7 +98,7 @@ var reqs = {
                 
                 obj["Bus"] = obj["Name"];
                 delete obj["Name"];
-
+                
                 obj["Online"] = obj["isOnline"];
                 delete obj["isOnline"];
 
@@ -116,7 +116,9 @@ var reqs = {
                 delete obj["Latitude"];
                 delete obj["Speed"];
 
-                if(obj["LastOnline"] == null){
+                
+                let isNum = /^\d+$/.test(obj["Bus"]);
+                if(obj["LastOnline"] == null || isNum == false){
                     delete obj;
                 }
                 else{
@@ -177,6 +179,7 @@ var reqs = {
                 }
             }
             let dataString = JSON.stringify(dataArr);
+            console.log('Data String: ' + dataString);
             //fs.writeFileSync('./data/getDeviceStatusAll.txt', dataString);
             fs.writeFileSync('./data/getDeviceStatusAll.json', dataString);
         });

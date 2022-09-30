@@ -6,8 +6,6 @@ module.exports = {
         var logger = require('./logger.js');
         var buffer = '';
 
-        var myMap;
-
         var imap = new Imap({
             user: "camtracker@apps.wnybusco.com",
             password: "moeSywbYAeGW",
@@ -44,10 +42,9 @@ module.exports = {
                     }
                     else{
                         var f = imap.fetch(results, {bodies: '1', markSeen: true});
-                        console.log('value of f: ' +f);
                         f.on('message', function(msg, seqno){
                             logger.printWriteLine('message #:'+seqno, 1);
-                            //logger.printWriteLine('message type: '+msg.txt, 1);
+                            logger.printWriteLine('message type: '+msg.txt, 1);
                             var prefix = '(#' + seqno + ') ';
                             msg.on('body', function (stream, info){
                                 stream.on('data', function(chunk){
@@ -56,17 +53,13 @@ module.exports = {
                                 })
                                 stream.once('end', function(){
                                     if(info.which === '1'){
-                                        console.log('Buffer 2: ' + buffer);
+                                        //console.log('Buffer 2: ' + buffer);
                                     }
                                 });
-                                //console.log(prefix + 'Body');
-                                stream.pipe(fs.createWriteStream('msg-' + seqno + '-body.txt'));
+                                logger.printWriteLine(prefix + 'Body');
+                                logger.printWriteLine(stream);
+                                stream.pipe(fs.createWriteStream('./mailParser/'+ seqno + '-body.txt'));
                             });
-                            /*
-                            msg.once('attributes', function (attrs) {
-                                console.log(prefix + 'Attributes: %s', inspect(attrs, false, 8));
-                            });
-                            */
                             msg.once('end', function () {
                                 logger.printWriteLine(prefix + ' - End of message.', 1);
                             });

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    th{
+        color:#fff;
+    }
+</style>
+<!--
+    Bootstrap code for the top nav bar section.
+-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">WNY Bus All Cams Status</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="http://192.168.21.98:1337/">All Cams</a>
+        <a class="nav-item nav-link" href="http://192.168.21.98:1337/issues">Issues</a>
+        <a class="nav-item nav-link" href="http://192.168.21.98:1337/maintenance">Bus Maintenance</a>
+        <a class="nav-item nav-link active" href="http://192.168.21.98:1337/maintenanceAdmin">Modify Maintenance <span class="sr-only">(current)</span></a>
+
+      </div>
+    </div>
+  </nav>
+
+
+
+<!--
+    Bootstrap code for the top blue table column headers.
+-->
+<table class="table table-striped table-bordered table-hover table-sm table-responsive">
+    <tr class="bg-dark">
+        <th data-column="Bus" data-order="desc">Bus: &#9650</th>
+        <th data-column="Issue" data-order="desc">Issue: &#9650</th>
+        <th data-column="DRID" data-order="desc">DRID: &#9650</th>
+        <th data-column="LastOnline" data-order="desc">Last Contact: &#9650</th>
+    </tr>
+    <tr>
+        <td>
+            <div class="card">
+                <input id="search-bus" class="form-control" type="text">
+            </div>
+        </td>
+        <td>
+            <div class="card">
+                <input id="search-issue" class="form-control" type="text">
+            </div>
+        </td>
+        <td>
+            <div class="card">
+                <input id="search-drid" class="form-control" type="text">
+            </div>
+        </td>
+        <td>
+            <div class="card">
+                <input id="search-lastContact" class="form-control" type="text">
+            </div>
+        </td>
+    </tr>
+
+    <tbody id="myTable">
+        
+    </tbody>
+</table>
+
+<script>
+    //fetch results on page load.
+    var dataArray = [];
+    runAjax();
+
+    // js for filtering functionality
+    $('#search-bus').on('keyup', function(){
+        var value = $(this).val()
+        var data = searchBus(value, dataArray)
+        buildTable(data)
+
+    })
+    $('#search-issue').on('keyup', function(){
+        var value = $(this).val()
+        var data = searchIssue(value, dataArray)
+        buildTable(data)
+
+    })
+    $('#search-drid').on('keyup', function(){
+        var value = $(this).val()
+        var data = searchDrid(value, dataArray)
+        buildTable(data)
+
+    })
+    $('#search-lastContact').on('keyup', function(){
+        var value = $(this).val()
+        var data = searchLastContact(value, dataArray)
+        buildTable(data)
+
+    })
+    
+    // js for sorting functionality
+    $('th').on('click', function(){
+        var column = $(this).data('column')
+        var order = $(this).data('order')
+        var text = $(this).html()
+        text = text.substring(0, text.length - 1)
+
+        if(order == 'desc'){
+            $(this).data('order', "asc")
+            dataArray = dataArray.sort((a,b) => a[column] > b[column] ? 1 :
+                -1)
+            text += '&#9660'
+        }else{
+            $(this).data('order', "desc")
+            dataArray = dataArray.sort((a,b) => a[column] < b[column] ? 1 :
+                -1)
+            text += '&#9650'
+        }
+        $(this).html(text)
+        buildTable(dataArray)
+    })
+
+    //refresh page results every 10 seconds
+    window.setInterval(function(){
+        runAjax();
+    }, 10000);
+
+    function runAjax(){
+        $.ajax({
+            method: 'GET',
+            url: 'http://192.168.21.98:1337/getDeviceIssuesCached',
+            success:function(response){
+                console.log('Ajax ran: issues results refreshed.');
+                dataArray = response
+                buildTable(dataArray)
+                console.log(dataArray)
+            }
+        })
+    }
+
+    function searchBus(value, data){
+        let filteredData = []
+        for(var i = 0; i < data.length; i++){
+            value = value.toLowerCase()
+            var b = data[i].Bus.toLowerCase()
+
+            if(b.includes(value)){
+                filteredData.push(data[i])
+            }
+        }
+        return filteredData
+    }
+
+    function searchIssue(value, data){
+        let filteredData = []
+        for(var i = 0; i < data.length; i++){
+            value = value.toLowerCase()
+            var on = data[i].Issue.toLowerCase()
+
+            if(on.includes(value)){
+                filteredData.push(data[i])
+            }
+        }
+        return filteredData
+    }
+
+    function searchDrid(value, data){
+        let filteredData = []
+        for(var i = 0; i < data.length; i++){
+            value = value.toLowerCase()
+            var d = data[i].DRID.toLowerCase()
+
+            if(d.includes(value)){
+                filteredData.push(data[i])
+            }
+        }
+        return filteredData
+    }
+
+    function searchLastContact(value, data){
+        let filteredData = []
+        for(var i = 0; i < data.length; i++){
+            value = value.toLowerCase()
+            var lc = data[i].LastOnline.toLowerCase()
+
+            
+            if(lc.includes(value)){
+                filteredData.push(data[i])
+            }
+            if(lc < value){
+                filteredData.push(data[i])
+            }
+        }
+        return filteredData
+    }
+
+    function buildTable(data){
+        var table = document.getElementById("myTable")
+        table.innerHTML = ''
+        for (var i = 0; i < data.length; i++){
+            var row = (`<tr>
+                            <td>${data[i].Bus}</td>
+                            <td>${data[i].Online}</td>
+                            <td>${data[i].DRID}</td>
+                            <td>${data[i].LastOnline}</td>
+                        </tr>`)
+            table.innerHTML += row
+
+        }
+    }
+
+</script>
